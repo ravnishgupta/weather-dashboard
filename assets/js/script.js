@@ -54,14 +54,14 @@ function getLatLong(city) {
 }
 
 function getCurrConditions(city) {
-  var ccURL = currConditionAPI + "?lat=" + lat + "&lon=" + lon + "&appid=" + apiKey + "&exclude=hourly,daily,minutely,alerts";
+  var ccURL = currConditionAPI + "?lat=" + lat + "&lon=" + lon + "&appid=" + apiKey + "&exclude=hourly,minutely,alerts&units=imperial";
   
   fetch(ccURL).then(function(response) {
     if (response.status === 200) {
       response.json().then(function(data) {
         //console.log(KelvinToFahrenheit(data.main.temp));
-        tempSpan.text(KelvinToFahrenheit(data.current.temp)+ '\u00B0 F');
-        windSpeedSpan.text(MPStoMPH(data.current.wind_speed)+ ' MPH');
+        tempSpan.text(data.current.temp + '\u00B0 F');
+        windSpeedSpan.text(data.current.wind_speed+ ' MPH'); 
         humiditySpan.text(data.current.humidity+ '%');
         var uvIndex = parseFloat(data.current.uvi);
         uvIdxSpan.text(uvIndex);
@@ -69,19 +69,19 @@ function getCurrConditions(city) {
         uvIdxSpan.removeClass();
         switch (true) {
           case (uvIndex<3):
-            uvIdxSpan.addClass("rounded bg-success");
+            uvIdxSpan.addClass("rounded bg-success text-light");
             break;
           case (uvIndex>=3 && uvIndex<6):
-            uvIdxSpan.addClass("rounded bgYellow")
+            uvIdxSpan.addClass("rounded bgYellow text-dark")
             break;
           case (uvIndex>=6 && uvIndex<8):
-            uvIdxSpan.addClass("rounded bg-warning");
+            uvIdxSpan.addClass("rounded bg-warning text-light");
             break;
           case (uvIndex>=8 && uvIndex<11):
-            uvIdxSpan.addClass("rounded bg-danger");
+            uvIdxSpan.addClass("rounded bg-danger text-light");
             break
           case (uvIndex>=11):
-            uvIdxSpan.addClass("rounded bgDarkMagenta");
+            uvIdxSpan.addClass("rounded bgDarkMagenta text-light");
             break;
         }
 
@@ -95,14 +95,6 @@ function getCurrConditions(city) {
   // })
 }
 
-function KelvinToFahrenheit(temp) {
-  //℉=((K-273.15)*1.8)+32
-  return ((((temp-273.15)*1.8)+32).toFixed(2));
-}
-
-function MPStoMPH (speed) {
- return ((Math.round(speed * 3600 / 1610.3*1000)/1000).toFixed(2));
-}
 
 function resetVal() {
   tempSpan.text('');

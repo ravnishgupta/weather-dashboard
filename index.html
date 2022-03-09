@@ -17,7 +17,7 @@
                     <h4 class="card-header">Search for a City:</h4>
                     <div style="text-align: center">
                         <form id="city-form" class="card-body">
-                        <input name="city" id="city" type="text" autofocus="true" class="form-input" />
+                        <input name="city" id="city" type="text" autofocus="true" class="form-input" style="max-width: 100%;" />
                     </div>
                     <div style="text-align: center"> 
                         <button type="submit" class="btn-secondary btn-sm" id="search" onclick="getCityTemp()">Search</button>
@@ -32,7 +32,9 @@
                     <div class="card-body">Wind: <span id="currWind"></span></div>
                     <div class="card-body">Humidity: <span id="currHumidity"></span></div>
                     <div class="card-body">UV Index: <span id="currUvIndex" style="width: 50px; display: inline-block; text-align: center;"></span></div>
-                    <div class="card-body" id="5day">5 Day Forecast</div>
+                </div>
+                <div class="card">
+                    <div class="card-body"><span class="font-weight-bold" id="5day">5 Day Forecast</span></div>
                 </div>
             </div>
         </div>
