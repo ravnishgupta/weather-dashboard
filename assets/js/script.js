@@ -57,11 +57,10 @@ function getLatLong(city) {
 function getCurrConditions(city) {
   var ccURL = currConditionAPI + "?lat=" + lat + "&lon=" + lon + "&appid=" + apiKey + "&exclude=hourly,minutely,alerts&units=imperial";
   
-  //+ " " + "
-  
   fetch(ccURL).then(function(response) {
     if (response.status === 200) {
       response.json().then(function(data) {
+        lblCity.text(lblCity.text() + ' (' + moment.unix(data.current.dt).format("MM/DD/YYYY") + ')');
         iconImg.attr('src', iconURL + data.current.weather[0].icon + ".png");
         iconImg.appendTo(lblCity);
         set5dayForecast(data);
@@ -121,6 +120,7 @@ function set5dayForecast(data) {
   icon1.text('');
   icon1Img.appendTo(icon1);
 
+  date1.text(moment.unix(data.daily[1].dt).format("MM/DD/YYYY"));
   temp1.text(data.daily[1].temp.day + '\u00B0 F');
   wind1.text(data.daily[1].wind_speed + " MPH");
   humidity1.text(data.daily[1].humidity + " %");
@@ -133,6 +133,7 @@ function set5dayForecast(data) {
   var humidity2 = $("#hum2");
   var icon2Img = $('<img id="day2Img">');
 
+  date2.text(moment.unix(data.daily[2].dt).format("MM/DD/YYYY"));
   icon2Img.attr('src', iconURL + data.daily[2].weather[0].icon + ".png");
   icon2.text('');
   icon2Img.appendTo(icon2);
@@ -148,6 +149,7 @@ function set5dayForecast(data) {
   var humidity3 = $("#hum3");
   var icon3Img = $('<img id="day3Img">');
 
+  date3.text(moment.unix(data.daily[3].dt).format("MM/DD/YYYY"));
   icon3Img.attr('src', iconURL + data.daily[3].weather[0].icon + ".png");
   icon3.text('');
   icon3Img.appendTo(icon3);
@@ -163,6 +165,7 @@ function set5dayForecast(data) {
   var humidity4 = $("#hum4");
   var icon4Img = $('<img id="day4Img">');
 
+  date4.text(moment.unix(data.daily[4].dt).format("MM/DD/YYYY"));
   icon4Img.attr('src', iconURL + data.daily[4].weather[0].icon + ".png");
   icon4.text('');
   icon4Img.appendTo(icon4);
@@ -178,6 +181,7 @@ function set5dayForecast(data) {
   var humidity5 = $("#hum5");
   var icon5Img = $('<img id="day5Img">');
 
+  date5.text(moment.unix(data.daily[5].dt).format("MM/DD/YYYY"));
   icon5Img.attr('src', iconURL + data.daily[5].weather[0].icon + ".png");
   icon5.text('');
   icon5Img.appendTo(icon5);
