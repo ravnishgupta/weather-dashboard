@@ -33,7 +33,7 @@ function getLatLong(city) {
     if (response.ok) {
       response.json().then(function(data) {
         if (Object.keys(data).length === 0) {
-          debugger;
+  
           lblCity.text("Invalid City. Please try again");
           resetVal();
         }
@@ -59,7 +59,8 @@ function getCurrConditions(city) {
   fetch(ccURL).then(function(response) {
     if (response.status === 200) {
       response.json().then(function(data) {
-        //console.log(KelvinToFahrenheit(data.main.temp));
+
+        set5dayForecast(data);
         tempSpan.text(data.current.temp + '\u00B0 F');
         windSpeedSpan.text(data.current.wind_speed+ ' MPH'); 
         humiditySpan.text(data.current.humidity+ '%');
@@ -84,7 +85,7 @@ function getCurrConditions(city) {
             uvIdxSpan.addClass("rounded bgDarkMagenta text-light");
             break;
         }
-
+        
       })
     }
     //else alert("Unable to connect to Open Weather. Please try again later.");
@@ -101,4 +102,59 @@ function resetVal() {
   windSpeedSpan.text('');
   humiditySpan.text('');
   uvIdxSpan.text('');
+}
+
+function set5dayForecast(data) {
+
+  var date1 = $("#dt1");
+  var icon1 = $("#icon1");
+  var temp1 = $("#temp1");
+  var wind1 = $("#wind1");
+  var humidity1 = $("#hum1");
+
+  temp1.text(data.daily[1].temp.day + '\u00B0 F');
+  wind1.text(data.daily[1].wind_speed + " MPH");
+  humidity1.text(data.daily[1].humidity + " %");
+
+  var date2 = $("#dt2");
+  var icon2 = $("#icon2");
+  var temp2 = $("#temp2");
+  var wind2 = $("#wind2");
+  var humidity2 = $("#hum2");
+
+  temp2.text(data.daily[2].temp.day + '\u00B0 F');
+  wind2.text(data.daily[2].wind_speed + " MPH");
+  humidity2.text(data.daily[2].humidity + " %");
+
+  var date3 = $("#dt3");
+  var icon3 = $("#icon3");
+  var temp3 = $("#temp3");
+  var wind3 = $("#wind3");
+  var humidity3 = $("#hum3");
+
+  temp3.text(data.daily[3].temp.day + '\u00B0 F');
+  wind3.text(data.daily[3].wind_speed + " MPH");
+  humidity3.text(data.daily[3].humidity + " %");
+
+  var date4 = $("#dt4");
+  var icon4 = $("#icon4");
+  var temp4 = $("#temp4");
+  var wind4 = $("#wind4");
+  var humidity4 = $("#hum4");
+
+  temp4.text(data.daily[4].temp.day + '\u00B0 F');
+  wind4.text(data.daily[4].wind_speed + " MPH");
+  humidity4.text(data.daily[4].humidity + " %");
+
+  var date5 = $("#dt5");
+  var icon5 = $("#icon5");
+  var temp5 = $("#temp5");
+  var wind5 = $("#wind5");
+  var humidity5 = $("#hum5");
+
+  temp5.text(data.daily[5].temp.day + '\u00B0 F');
+  wind5.text(data.daily[5].wind_speed + " MPH");
+  humidity5.text(data.daily[5].humidity + " %");
+
+
 }
