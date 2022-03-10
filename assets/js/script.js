@@ -4,6 +4,7 @@ var lblCity = $("#cityLabel");
 var geoAPI = "http://api.openweathermap.org/geo/1.0/direct";
 var weatherAPI = "http://api.openweathermap.org/data/2.5/forecast";
 var currConditionAPI = "http://api.openweathermap.org/data/2.5/onecall"
+var iconURL = "http://openweathermap.org/img/wn/"
 var apiKey ="e3de7b451ff3cdc179f2915141cb031b";
 var lat;
 var lon;
@@ -11,7 +12,7 @@ var tempSpan = $("#currTemp");
 var windSpeedSpan = $("#currWind");
 var humiditySpan = $("#currHumidity");
 var uvIdxSpan = $("#currUvIndex");
-
+var iconImg = $('<img id="dynamic">');
 
 function getCityTemp(){
     event.preventDefault()
@@ -56,10 +57,13 @@ function getLatLong(city) {
 function getCurrConditions(city) {
   var ccURL = currConditionAPI + "?lat=" + lat + "&lon=" + lon + "&appid=" + apiKey + "&exclude=hourly,minutely,alerts&units=imperial";
   
+  //+ " " + "
+  
   fetch(ccURL).then(function(response) {
     if (response.status === 200) {
       response.json().then(function(data) {
-
+        iconImg.attr('src', iconURL + data.current.weather[0].icon + ".png");
+        iconImg.appendTo(lblCity);
         set5dayForecast(data);
         tempSpan.text(data.current.temp + '\u00B0 F');
         windSpeedSpan.text(data.current.wind_speed+ ' MPH'); 
@@ -111,16 +115,27 @@ function set5dayForecast(data) {
   var temp1 = $("#temp1");
   var wind1 = $("#wind1");
   var humidity1 = $("#hum1");
+  var icon1Img = $('<img id="day1Img">');
+
+  icon1Img.attr('src', iconURL + data.daily[1].weather[0].icon + ".png");
+  icon1.text('');
+  icon1Img.appendTo(icon1);
 
   temp1.text(data.daily[1].temp.day + '\u00B0 F');
   wind1.text(data.daily[1].wind_speed + " MPH");
   humidity1.text(data.daily[1].humidity + " %");
+
 
   var date2 = $("#dt2");
   var icon2 = $("#icon2");
   var temp2 = $("#temp2");
   var wind2 = $("#wind2");
   var humidity2 = $("#hum2");
+  var icon2Img = $('<img id="day2Img">');
+
+  icon2Img.attr('src', iconURL + data.daily[2].weather[0].icon + ".png");
+  icon2.text('');
+  icon2Img.appendTo(icon2);
 
   temp2.text(data.daily[2].temp.day + '\u00B0 F');
   wind2.text(data.daily[2].wind_speed + " MPH");
@@ -131,6 +146,11 @@ function set5dayForecast(data) {
   var temp3 = $("#temp3");
   var wind3 = $("#wind3");
   var humidity3 = $("#hum3");
+  var icon3Img = $('<img id="day3Img">');
+
+  icon3Img.attr('src', iconURL + data.daily[3].weather[0].icon + ".png");
+  icon3.text('');
+  icon3Img.appendTo(icon3);
 
   temp3.text(data.daily[3].temp.day + '\u00B0 F');
   wind3.text(data.daily[3].wind_speed + " MPH");
@@ -141,6 +161,11 @@ function set5dayForecast(data) {
   var temp4 = $("#temp4");
   var wind4 = $("#wind4");
   var humidity4 = $("#hum4");
+  var icon4Img = $('<img id="day4Img">');
+
+  icon4Img.attr('src', iconURL + data.daily[4].weather[0].icon + ".png");
+  icon4.text('');
+  icon4Img.appendTo(icon4);
 
   temp4.text(data.daily[4].temp.day + '\u00B0 F');
   wind4.text(data.daily[4].wind_speed + " MPH");
@@ -151,10 +176,13 @@ function set5dayForecast(data) {
   var temp5 = $("#temp5");
   var wind5 = $("#wind5");
   var humidity5 = $("#hum5");
+  var icon5Img = $('<img id="day5Img">');
+
+  icon5Img.attr('src', iconURL + data.daily[5].weather[0].icon + ".png");
+  icon5.text('');
+  icon5Img.appendTo(icon5);
 
   temp5.text(data.daily[5].temp.day + '\u00B0 F');
   wind5.text(data.daily[5].wind_speed + " MPH");
   humidity5.text(data.daily[5].humidity + " %");
-
-
 }
