@@ -43,6 +43,7 @@ function getLatLong(city) {
           lat = data[0].lat;
           lon = data[0].lon; 
           getCurrConditions(city);
+        
         }
       })
     }
@@ -90,6 +91,8 @@ function getCurrConditions(city) {
         }
         
       })
+      saveCity(lblCity.text().trim());
+      showRecentSearches();
     }
     //else alert("Unable to connect to Open Weather. Please try again later.");
   })
@@ -99,6 +102,40 @@ function getCurrConditions(city) {
   // })
 }
 
+function showRecentSearches() {
+  debugger;
+  var myDiv = document.getElementById("recentSearches");
+  removeAllChildNodes(myDiv);
+  if (localStorage.getItem('citySearch')) {
+    existing = localStorage.getItem('citySearch').split(';');
+    for (var i=0; i<existing.length; i++) {
+      var searchButton = document.createElement("button");
+      if (existing[i].trim().length>0) {
+        searchButton.innerText = existing[i];
+        myDiv.appendChild(searchButton);
+      }
+    }
+  }
+}
+
+function removeAllChildNodes(parent) {
+  while (parent.firstChild) {
+      parent.removeChild(parent.firstChild);
+  }
+}
+
+function saveCity(cityName) {
+  var tmp = ''
+  var existing = [];
+  if (localStorage.getItem('citySearch')) {
+    existing = localStorage.getItem('citySearch').split(';');
+    tmp = localStorage.getItem('citySearch');
+  }
+  if (existing.indexOf(cityName) === -1){
+    tmp += cityName + ";";
+    localStorage.setItem('citySearch', tmp);
+  }
+}
 
 function resetVal() {
   tempSpan.text('');
