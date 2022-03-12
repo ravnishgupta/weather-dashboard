@@ -47,12 +47,12 @@ function getLatLong(city) {
         }
       })
     }
-    //else alert("Unable to connect to Open Weather. Please try again later.");
+    else alert("Unable to connect to Open Weather. Please try again later.");
   })
-  // .catch(function(error) {
-  //   // Notice this `.catch()` getting chained onto the end of the `.then()` method
-  //   alert("Unable to connect to Open Weather. Please try again later.");
-  // })
+  .catch(function(error) {
+    // Notice this `.catch()` getting chained onto the end of the `.then()` method
+    alert("Unable to connect to Open Weather. Please try again later.");
+  })
 }
 
 function getCurrConditions(city) {
@@ -94,16 +94,15 @@ function getCurrConditions(city) {
       saveCity(lblCity.text().trim());
       showRecentSearches();
     }
-    //else alert("Unable to connect to Open Weather. Please try again later.");
+    else alert("Unable to connect to Open Weather. Please try again later.");
   })
-  // .catch(function(error) {
-  //   // Notice this `.catch()` getting chained onto the end of the `.then()` method
-  //   alert("Unable to connect to Open Weather. Please try again later.");
-  // })
+  .catch(function(error) {
+    // Notice this `.catch()` getting chained onto the end of the `.then()` method
+    alert("Unable to connect to Open Weather. Please try again later.");
+  })
 }
 
 function showRecentSearches() {
-  debugger;
   var myDiv = document.getElementById("recentSearches");
   removeAllChildNodes(myDiv);
   if (localStorage.getItem('citySearch')) {
@@ -112,6 +111,7 @@ function showRecentSearches() {
       var searchButton = document.createElement("button");
       if (existing[i].trim().length>0) {
         searchButton.innerText = existing[i];
+        searchButton.addEventListener('click', setCityAndSearch);
         myDiv.appendChild(searchButton);
       }
     }
@@ -122,6 +122,13 @@ function removeAllChildNodes(parent) {
   while (parent.firstChild) {
       parent.removeChild(parent.firstChild);
   }
+}
+
+function setCityAndSearch() {
+  //console.log(this.innerHTML)
+  txtCity.val(this.innerHTML);
+  getCityTemp();
+
 }
 
 function saveCity(cityName) {
